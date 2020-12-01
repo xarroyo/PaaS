@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    image: prestashop/prestashop
+    ports:
+      - "8080:80"
+
+  database:
+    image: mysql:5.7
+    volumes:
+      - ./db/initialize:/docker-entrypoint-initdb.d
+      - db-volume:/var/lib/mysql:rw
+    # logging:
+    #   driver: none
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=prestashop
+    ports:
+      - "3306:3306"
+
+volumes:
+  db-volume: {}
